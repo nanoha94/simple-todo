@@ -19,10 +19,12 @@ function App() {
     setNewTodoTitle("");
   };
 
-  const updateTodo = (updateTodo:TodoType) => {
-    const newTodos = todos.filter((todo) => todo.id !== updateTodo.id);
-    setTodos([...newTodos, updateTodo]);
-  }
+  const updateTodo = (updateTodo: TodoType) => {
+    const newTodos = todos.filter((todo) =>
+      todo.id !== updateTodo.id ? updateTodo : todo
+    );
+    setTodos(newTodos);
+  };
 
   const deleteTodo = (id: number) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
