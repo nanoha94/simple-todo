@@ -24,15 +24,19 @@ function App() {
     setTodos([...newTodos, updateTodo]);
   }
 
-  const deleteTodo = (id:number) => {
+  const deleteTodo = (id: number) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
-  }
+  };
 
   return (
     <>
-      <InputArea addTodo={addTodo} inputText={newTodoTitle} setInputText={setNewTodoTitle}/>
-      <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo}/>
+      <InputArea
+        addTodo={addTodo}
+        inputText={newTodoTitle}
+        setInputText={setNewTodoTitle}
+      />
+      <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo} />
     </>
   );
 }
