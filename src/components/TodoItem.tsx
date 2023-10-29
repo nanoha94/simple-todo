@@ -4,7 +4,7 @@ import CustomSelect from "./CustomSelect";
 import { TodoStatuses } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, TextField } from "@mui/material";
 
 interface Props {
   todo: TodoType;
@@ -12,29 +12,23 @@ interface Props {
   updateTodo: (todo: TodoType) => void;
 }
 
-const EditableInput = styled.input`
-  height: calc(100% - 8px);
-  padding: 4px 8px;
-  font-size: 1rem;
-  background-color: transparent;
-  border: none;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const ListItem = styled.li`
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 20px;
+  flex-direction: column;
+  gap: 8px;
 `;
 
-const LeftItem = styled.div`
-  font-size: inherit;
-`;
-
-const RightItem = styled.div`
+const HorizontalLayout = styled.div`
   display: flex;
-  gap: 4px;
+  justify-content: space-between;
   align-items: center;
+  gap: 8px;
 `;
 
 const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
@@ -51,11 +45,14 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
   };
 
   return (
-    <>
+    <Container>
       <ListItem>
-        <LeftItem>
-          <EditableInput
+        <HorizontalLayout>
+          <TextField
+            sx={{ width: 1 }}
             type="text"
+            label="タイトル"
+            size="small"
             value={editTodo.title}
             onChange={(e) => {
               setEditTodo({ ...todo, title: e.target.value });
@@ -63,21 +60,32 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             onBlur={() => updateTodo(editTodo)}
             onKeyDown={onKeyDown}
           />
-        </LeftItem>
-        <RightItem>
-          <CustomSelect
-            options={TodoStatuses}
-            value={editTodo.status}
-            onChange={updateStatus}
-          />
-          <Tooltip title="削除">
-            <IconButton onClick={() => deleteTodo(todo.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </RightItem>
+          <HorizontalLayout>
+            <CustomSelect
+              options={TodoStatuses}
+              value={editTodo.status}
+              onChange={updateStatus}
+            />
+            <Tooltip title="削除">
+              <IconButton onClick={() => deleteTodo(todo.id)}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </HorizontalLayout>
+        </HorizontalLayout>
+        <TextField
+          label="詳細"
+          size="small"
+          multiline
+          rows={4}
+          value={editTodo.detail}
+          onChange={(e) => {
+            setEditTodo({ ...todo, detail: e.target.value });
+          }}
+          onBlur={() => updateTodo(editTodo)}
+        />
       </ListItem>
-    </>
+    </Container>
   );
 };
 

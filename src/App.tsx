@@ -11,7 +11,7 @@ const Container = styled.div`
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 `;
 
 function App() {

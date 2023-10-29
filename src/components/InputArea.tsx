@@ -12,10 +12,29 @@ interface Props {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 20px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 `;
 
-const InputArea: React.FC<Props> = ({ addTodo}) => {
+const Title = styled.h1`
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: left;
+`;
+
+const HorizontalLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+`;
+
+const InputArea: React.FC<Props> = ({ addTodo }) => {
   const [todo, setTodo] = useState<TodoType>({
     id: 0,
     title: "",
@@ -25,41 +44,50 @@ const InputArea: React.FC<Props> = ({ addTodo}) => {
 
   const createTodo = () => {
     addTodo(todo);
-    setTodo({id: todo.id + 1, title: '', status: NON_STARTED, detail: ''});
-  }
-
+    setTodo({ id: todo.id + 1, title: "", status: NON_STARTED, detail: "" });
+  };
 
   return (
     <Container>
-      <TextField
-        type="text"
-        label="タイトル（必須）"
-        size="small"
-        value={todo.title}
-        onChange={(e) => {
-          setTodo({ ...todo, title: e.target.value });
-        }}
-      />
-      <TextField
-        label="詳細"
-        size="small"
-        value={todo.detail}
-        multiline
-        rows={4}
-        onChange={(e) => {
-          setTodo({ ...todo, detail: e.target.value });
-        }}
-      />
-      <CustomSelect
-        options={TodoStatuses}
-        value={todo.status}
-        onChange={(status) => {
-          setTodo({ ...todo, status: status });
-        }}
-      />
-      <Button variant="contained" disabled={!todo.title ? true: false} onClick={createTodo}>
-        追加
-      </Button>
+      <Title>新規追加</Title>
+      <InputContainer>
+        <HorizontalLayout>
+          <TextField
+            sx={{ width: 1 }}
+            type="text"
+            label="タイトル（必須）"
+            size="small"
+            value={todo.title}
+            onChange={(e) => {
+              setTodo({ ...todo, title: e.target.value });
+            }}
+          />
+          <CustomSelect
+            options={TodoStatuses}
+            value={todo.status}
+            onChange={(status) => {
+              setTodo({ ...todo, status: status });
+            }}
+          />
+        </HorizontalLayout>
+        <TextField
+          label="詳細"
+          size="small"
+          value={todo.detail}
+          multiline
+          rows={4}
+          onChange={(e) => {
+            setTodo({ ...todo, detail: e.target.value });
+          }}
+        />
+        <Button
+          variant="contained"
+          disabled={!todo.title ? true : false}
+          onClick={createTodo}
+        >
+          追加
+        </Button>
+      </InputContainer>
     </Container>
   );
 };
