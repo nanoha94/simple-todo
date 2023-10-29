@@ -20,8 +20,8 @@ function App() {
   };
 
   const updateTodo = (updateTodo: TodoType) => {
-    const newTodos = todos.filter((todo) =>
-      todo.id !== updateTodo.id ? updateTodo : todo
+    const newTodos = todos.map((todo) =>
+      todo.id === updateTodo.id ? updateTodo : todo
     );
     setTodos(newTodos);
   };

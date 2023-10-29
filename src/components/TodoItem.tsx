@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TodoType } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
 import { TodoStatuses } from "../constants/TodoStatus";
@@ -39,7 +39,6 @@ const RightItem = styled.div`
 
 const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
   const [editTodo, setEditTodo] = useState<TodoType>(todo);
-  const [isUpdateStatus, setIsUpdateStatus] = useState<boolean>(false);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing || e.key !== "Enter") return;
@@ -48,15 +47,8 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
 
   const updateStatus = (status:string) => {
     setEditTodo({...editTodo, status:status});
-    setIsUpdateStatus(true);
+    updateTodo({...editTodo, status:status});
   }
-
-  useEffect(() => {
-    if(isUpdateStatus){
-    updateTodo(editTodo);
-    setIsUpdateStatus(false);
-    }
-  }, [editTodo]);
 
   return (
     <>
