@@ -1,5 +1,5 @@
 import { Select, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Props {
   options: string[];
@@ -9,6 +9,10 @@ interface Props {
 
 const CustomSelect: React.FC<Props> = ({ options, value, onChange }) => {
   const [selected, setSelected] = useState(value);
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
 
   return (
     <>

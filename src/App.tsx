@@ -2,21 +2,24 @@ import "./App.css";
 import { useState } from "react";
 import { TodoType } from "./types/Todo";
 import TodoList from "./components/TodoList";
-import { NON_STARTED } from "./constants/TodoStatus";
 import InputArea from "./components/InputArea";
+import { Divider } from "@mui/material";
+import styled from "@emotion/styled";
+
+const Container = styled.div`
+  width: 400px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
 
 function App() {
   const [todos, setTodos] = useState<TodoType[]>([]);
-  const [nextId, setNextId] = useState<number>(0);
-  const [newTodoTitle, setNewTodoTitle] = useState<string>("");
 
-  const addTodo = () => {
-    setTodos([
-      ...todos,
-      { id: nextId, title: newTodoTitle, status: NON_STARTED },
-    ]);
-    setNextId(nextId + 1);
-    setNewTodoTitle("");
+  const addTodo = (newTodo: TodoType) => {
+    console.log(newTodo);
+    setTodos([...todos, newTodo]);
   };
 
   const updateTodo = (updateTodo: TodoType) => {
@@ -32,14 +35,13 @@ function App() {
   };
 
   return (
-    <>
+    <Container>
       <InputArea
         addTodo={addTodo}
-        inputText={newTodoTitle}
-        setInputText={setNewTodoTitle}
       />
+      <Divider variant="middle" />
       <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo} />
-    </>
+    </Container>
   );
 }
 
