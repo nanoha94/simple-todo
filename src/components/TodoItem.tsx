@@ -45,10 +45,10 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
     e.currentTarget.blur();
   };
 
-  const updateStatus = (status:string) => {
-    setEditTodo({...editTodo, status:status});
-    updateTodo({...editTodo, status:status});
-  }
+  const updateStatus = (status: string) => {
+    setEditTodo({ ...editTodo, status: status });
+    updateTodo({ ...editTodo, status: status });
+  };
 
   return (
     <>
@@ -58,14 +58,18 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             type="text"
             value={editTodo.title}
             onChange={(e) => {
-              setEditTodo({...todo, title: e.target.value});
+              setEditTodo({ ...todo, title: e.target.value });
             }}
-             onBlur={() => updateTodo(editTodo)}
+            onBlur={() => updateTodo(editTodo)}
             onKeyDown={onKeyDown}
           />
         </LeftItem>
         <RightItem>
-          <CustomSelect options={TodoStatuses} value={editTodo.status} onChange={updateStatus}/>
+          <CustomSelect
+            options={TodoStatuses}
+            value={editTodo.status}
+            onChange={updateStatus}
+          />
           <Tooltip title="削除">
             <IconButton onClick={() => deleteTodo(todo.id)}>
               <DeleteIcon />

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 interface Props {
   options: string[];
   value: string;
-  onChange: (status:string) => void;
+  onChange: (status: string) => void;
 }
 
 const CustomSelect: React.FC<Props> = ({ options, value, onChange }) => {

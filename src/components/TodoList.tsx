@@ -6,7 +6,7 @@ import TodoItem from "./TodoItem";
 interface Props {
   todos: TodoType[];
   deleteTodo: (id: number) => void;
-  updateTodo: (todo:TodoType) => void;
+  updateTodo: (todo: TodoType) => void;
 }
 
 const List = styled.ul`

@@ -15,12 +15,10 @@ const Container = styled.div`
 `;
 
 const InputArea: React.FC<Props> = ({ addTodo, inputText, setInputText }) => {
-
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing || e.key !== "Enter") return;
     addTodo();
   };
-
 
   return (
     <Container>
