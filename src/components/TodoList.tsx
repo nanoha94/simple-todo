@@ -38,7 +38,7 @@ const TodoList: React.FC<Props> = ({ todos, deleteTodo, updateTodo }) => {
         {todos.map((todo) => (
           <>
           <TodoItem
-            key={todo.id}
+            key={todo.title}  // TODO: 見直し
             todo={todo}
             deleteTodo={deleteTodo}
             updateTodo={updateTodo}

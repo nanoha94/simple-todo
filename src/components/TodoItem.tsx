@@ -66,11 +66,11 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
               value={editTodo.status}
               onChange={updateStatus}
             />
-            <Tooltip title="削除">
+            {/* <Tooltip title="削除">
               <IconButton onClick={() => deleteTodo(todo.id)}>
                 <DeleteIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
           </HorizontalLayout>
         </HorizontalLayout>
         <TextField

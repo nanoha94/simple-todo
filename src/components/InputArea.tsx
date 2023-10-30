@@ -36,15 +36,14 @@ const HorizontalLayout = styled.div`
 
 const InputArea: React.FC<Props> = ({ addTodo }) => {
   const [todo, setTodo] = useState<TodoType>({
-    id: 0,
     title: "",
-    status: NON_STARTED,
     detail: "",
+    status: NON_STARTED,    
   });
 
   const createTodo = () => {
     addTodo(todo);
-    setTodo({ id: todo.id + 1, title: "", status: NON_STARTED, detail: "" });
+    setTodo({ title: "", status: NON_STARTED, detail: "" });
   };
 
   return (
