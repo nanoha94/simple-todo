@@ -35,6 +35,7 @@ const HorizontalLayout = styled.div`
 
 const Status = styled.span<{ status: string }>`
   padding: 2px 8px;
+  font-weight: bold;
   color: white;
   background-color: ${(props) =>
     props.status === PROGRESS
@@ -108,7 +109,7 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             disabled={!todo.title ? true : false}
             onClick={() => setIsEdit(false)}
           >
-            追加
+            完了
           </Button>
         </ListItem>
       ) : (
