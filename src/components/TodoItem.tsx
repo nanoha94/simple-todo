@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { TodoType } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
-import { TodoStatuses } from "../constants/TodoStatus";
+import { COMPLETED, PROGRESS, TodoStatuses } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Tooltip, TextField, Divider } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { IconButton, Tooltip, TextField, Divider, Button } from "@mui/material";
+import { gray, green, orange } from "../constants/Color";
 
 interface Props {
   todo: TodoType;
@@ -18,7 +20,7 @@ const Container = styled.li`
   gap: 20px;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -31,7 +33,32 @@ const HorizontalLayout = styled.div`
   gap: 8px;
 `;
 
+const Status = styled.span<{ status: string }>`
+  padding: 2px 8px;
+  color: white;
+  background-color: ${(props) =>
+    props.status === PROGRESS
+      ? orange
+      : props.status === COMPLETED
+      ? green
+      : gray};
+  border-radius: 8px;
+`;
+
+const Title = styled.p`
+  margin: 0;
+  text-align: left;
+  font-weight: bold;
+`;
+
+const Detail = styled.p`
+  margin: 0;
+  text-align: left;
+  font-size: 0.8rem;
+`;
+
 const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
+  const [isEdit, setIsEdit] = useState(false);
   const [editTodo, setEditTodo] = useState<TodoType>(todo);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -46,8 +73,13 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
 
   return (
     <Container>
-      <ListItem>
-        <HorizontalLayout>
+      {isEdit ? (
+        <ListItem>
+          <CustomSelect
+            options={TodoStatuses}
+            value={editTodo.status}
+            onChange={updateStatus}
+          />
           <TextField
             sx={{ width: 1 }}
             type="text"
@@ -60,31 +92,46 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             onBlur={() => updateTodo(editTodo)}
             onKeyDown={onKeyDown}
           />
+          <TextField
+            label="詳細"
+            size="small"
+            multiline
+            rows={4}
+            value={editTodo.detail}
+            onChange={(e) => {
+              setEditTodo({ ...todo, detail: e.target.value });
+            }}
+            onBlur={() => updateTodo(editTodo)}
+          />
+          <Button
+            variant="contained"
+            disabled={!todo.title ? true : false}
+            onClick={() => setIsEdit(false)}
+          >
+            追加
+          </Button>
+        </ListItem>
+      ) : (
+        <ListItem>
           <HorizontalLayout>
-            <CustomSelect
-              options={TodoStatuses}
-              value={editTodo.status}
-              onChange={updateStatus}
-            />
-            <Tooltip title="削除">
-              <IconButton onClick={() => deleteTodo(todo.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
+            <Status status={editTodo.status}>{editTodo.status}</Status>
+            <HorizontalLayout>
+              <Tooltip title="編集">
+                <IconButton onClick={() => setIsEdit(true)}>
+                  <ModeEditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="削除">
+                <IconButton onClick={() => deleteTodo(todo.id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </HorizontalLayout>
           </HorizontalLayout>
-        </HorizontalLayout>
-        <TextField
-          label="詳細"
-          size="small"
-          multiline
-          rows={4}
-          value={editTodo.detail}
-          onChange={(e) => {
-            setEditTodo({ ...todo, detail: e.target.value });
-          }}
-          onBlur={() => updateTodo(editTodo)}
-        />
-      </ListItem>
+          <Title>{editTodo.title}</Title>
+          {editTodo.detail && <Detail>{editTodo.detail}</Detail>}
+        </ListItem>
+      )}
       <Divider variant="middle" />
     </Container>
   );

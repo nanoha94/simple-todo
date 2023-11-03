@@ -27,13 +27,6 @@ const Title = styled.h1`
   text-align: left;
 `;
 
-const HorizontalLayout = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-`;
-
 const InputArea: React.FC<Props> = ({ addTodo }) => {
   const [todo, setTodo] = useState<TodoType>({
     id: 0,
@@ -51,25 +44,24 @@ const InputArea: React.FC<Props> = ({ addTodo }) => {
     <Container>
       <Title>新規追加</Title>
       <InputContainer>
-        <HorizontalLayout>
-          <TextField
-            sx={{ width: 1 }}
-            type="text"
-            label="タイトル（必須）"
-            size="small"
-            value={todo.title}
-            onChange={(e) => {
-              setTodo({ ...todo, title: e.target.value });
-            }}
-          />
-          <CustomSelect
-            options={TodoStatuses}
-            value={todo.status}
-            onChange={(status) => {
-              setTodo({ ...todo, status: status });
-            }}
-          />
-        </HorizontalLayout>
+        <CustomSelect
+          options={TodoStatuses}
+          value={todo.status}
+          onChange={(status) => {
+            setTodo({ ...todo, status: status });
+          }}
+        />
+        <TextField
+          sx={{ width: 1 }}
+          type="text"
+          label="タイトル（必須）"
+          size="small"
+          value={todo.title}
+          onChange={(e) => {
+            setTodo({ ...todo, title: e.target.value });
+          }}
+        />
+
         <TextField
           label="詳細"
           size="small"
