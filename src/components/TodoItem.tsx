@@ -62,14 +62,9 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editTodo, setEditTodo] = useState<TodoType>(todo);
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
-    e.currentTarget.blur();
-  };
-
-  const updateStatus = (status: string) => {
-    setEditTodo({ ...editTodo, status: status });
-    updateTodo({ ...editTodo, status: status });
+  const updateChanges = () => {
+    updateTodo(editTodo);
+    setIsEdit(false);
   };
 
   return (
@@ -79,7 +74,7 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
           <CustomSelect
             options={TodoStatuses}
             value={editTodo.status}
-            onChange={updateStatus}
+            onChange={(status) => setEditTodo({ ...editTodo, status: status })}
           />
           <TextField
             sx={{ width: 1 }}
@@ -88,10 +83,8 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             size="small"
             value={editTodo.title}
             onChange={(e) => {
-              setEditTodo({ ...todo, title: e.target.value });
+              setEditTodo({ ...editTodo, title: e.target.value });
             }}
-            onBlur={() => updateTodo(editTodo)}
-            onKeyDown={onKeyDown}
           />
           <TextField
             label="詳細"
@@ -100,14 +93,14 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
             rows={4}
             value={editTodo.detail}
             onChange={(e) => {
-              setEditTodo({ ...todo, detail: e.target.value });
+              setEditTodo({ ...editTodo, detail: e.target.value });
             }}
             onBlur={() => updateTodo(editTodo)}
           />
           <Button
             variant="contained"
             disabled={!todo.title ? true : false}
-            onClick={() => setIsEdit(false)}
+            onClick={updateChanges}
           >
             完了
           </Button>
