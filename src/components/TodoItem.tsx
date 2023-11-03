@@ -4,7 +4,7 @@ import CustomSelect from "./CustomSelect";
 import { TodoStatuses } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Tooltip, TextField } from "@mui/material";
+import { IconButton, Tooltip, TextField, Divider } from "@mui/material";
 
 interface Props {
   todo: TodoType;
@@ -12,7 +12,7 @@ interface Props {
   updateTodo: (todo: TodoType) => void;
 }
 
-const Container = styled.div`
+const Container = styled.li`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -85,6 +85,7 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
           onBlur={() => updateTodo(editTodo)}
         />
       </ListItem>
+      <Divider variant="middle" />
     </Container>
   );
 };
