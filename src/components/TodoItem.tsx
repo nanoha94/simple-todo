@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { TodoType } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
-import { COMPLETED, PROGRESS, TodoStatuses } from "../constants/TodoStatus";
+import { TodoStatuses, statusColor } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { IconButton, Tooltip, TextField, Divider, Button } from "@mui/material";
-import { gray, green, orange } from "../constants/Color";
 
 interface Props {
   todo: TodoType;
@@ -37,12 +36,7 @@ const Status = styled.span<{ status: string }>`
   padding: 2px 8px;
   font-weight: bold;
   color: white;
-  background-color: ${(props) =>
-    props.status === PROGRESS
-      ? orange
-      : props.status === COMPLETED
-      ? green
-      : gray};
+  background-color: ${(props) => statusColor(props.status)};
   border-radius: 8px;
 `;
 
