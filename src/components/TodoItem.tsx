@@ -110,7 +110,7 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="削除">
-                <IconButton onClick={() => deleteTodo(todo.id)}>
+                <IconButton onClick={() => {}}>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
