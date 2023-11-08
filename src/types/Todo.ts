@@ -1,12 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export type TodoType = {
-  title: string;
-  detail: string;
-  status: string;
-};
-
-export type DbTodo = {
+export type Todo = {
   id: string;
   title: string;
   detail: string;

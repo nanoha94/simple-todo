@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { DbTodo, TodoType } from "../types/Todo";
+import { Todo } from "../types/Todo";
 import styled from "@emotion/styled";
 import {
   collection,
+  deleteDoc,
+  updateDoc,
   limit,
   onSnapshot,
   orderBy,
   query,
+  doc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, dbTimestamp } from "../firebase";
 import TodoItem from "../components/TodoItem";
 
 const Title = styled.h1`
@@ -32,17 +35,29 @@ const List = styled.ul`
 `;
 
 const TodoList = () => {
-  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-  const updateTodo = () => {};
+  const updateTodo = async (updateTodo: Todo) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === updateTodo.id ? updateTodo : todo
+    );
+    setTodos(newTodos);
 
-  const deleteTodo = () => {};
+    await updateDoc(doc(db, "todos", updateTodo.id), {
+      ...updateTodo,
+      updated_at: dbTimestamp.now(),
+    });
+  };
+
+  const deleteTodo = async (id: string) => {
+    await deleteDoc(doc(db, "todos", id));
+  };
 
   useEffect(() => {
     const unsub = onSnapshot(
       query(collection(db, "todos"), orderBy("created_at"), limit(50)),
       (snapshot) => {
-        const dbTodos: DbTodo[] = [];
+        const dbTodos: Todo[] = [];
         snapshot.docs.map((doc) => {
           dbTodos.push({
             id: doc.data().id,
@@ -66,7 +81,7 @@ const TodoList = () => {
       <List>
         {todos.map((todo) => (
           <TodoItem
-            key={todo.title} // TODO: 見直し
+            key={todo.id}
             todo={todo}
             deleteTodo={deleteTodo}
             updateTodo={updateTodo}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TodoType } from "../types/Todo";
+import { Todo } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
 import { TodoStatuses, statusColor } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
@@ -8,9 +8,9 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { IconButton, Tooltip, TextField, Divider, Button } from "@mui/material";
 
 interface Props {
-  todo: TodoType;
-  deleteTodo: (id: number) => void;
-  updateTodo: (todo: TodoType) => void;
+  todo: Todo;
+  deleteTodo: (id: string) => void;
+  updateTodo: (todo: Todo) => void;
 }
 
 const Container = styled.li`
@@ -54,7 +54,7 @@ const Detail = styled.p`
 
 const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [editTodo, setEditTodo] = useState<TodoType>(todo);
+  const [editTodo, setEditTodo] = useState<Todo>(todo);
 
   const updateChanges = () => {
     updateTodo(editTodo);
@@ -110,7 +110,7 @@ const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="削除">
-                <IconButton onClick={() => {}}>
+                <IconButton onClick={() => deleteTodo(editTodo.id)}>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>

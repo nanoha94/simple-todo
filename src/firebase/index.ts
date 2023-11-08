@@ -1,19 +1,22 @@
 import { firebaseConfig } from "./config";
 import { initializeApp } from "firebase/app";
-import { getFirestore, Timestamp, collection, addDoc, doc, setDoc } from 'firebase/firestore';
-import { DbTodoType, TodoType } from "../types/Todo";
-
+import {
+  getFirestore,
+  Timestamp,
+  collection,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import { Todo } from "../types/Todo";
 
 initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 export const dbTimestamp = Timestamp;
 
-// export const dbTodosRef = await addDoc(collection(db, "todos"));
-
-export const saveTodo =  async({title, detail, status}: TodoType) => {
-  const data:DbTodoType = {
-    id: '',
+export const saveTodo = async ({ title, detail, status }: Todo) => {
+  const data: Todo = {
+    id: "",
     title,
     detail,
     status,
