@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 
 export type TodoType = {
   title: string;
@@ -6,12 +6,12 @@ export type TodoType = {
   status: string;
 };
 
-export type DbTodoType = {
+export type DbTodo = {
   id: string;
   title: string;
   detail: string;
   status: string;
-  created_at: Timestamp
+  created_at: Timestamp;
   updated_at: Timestamp;
 };
 
