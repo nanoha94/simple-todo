@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Todo } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
 import { TodoStatuses, statusColor } from "../constants/TodoStatus";
@@ -6,11 +6,11 @@ import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { IconButton, Tooltip, TextField, Divider, Button } from "@mui/material";
+import { deleteDoc, updateDoc, doc } from "firebase/firestore";
+import { db, dbTimestamp } from "../firebase";
 
 interface Props {
   todo: Todo;
-  deleteTodo: (id: string) => void;
-  updateTodo: (todo: Todo) => void;
 }
 
 const Container = styled.li`
@@ -52,13 +52,24 @@ const Detail = styled.p`
   font-size: 0.8rem;
 `;
 
-const TodoItem: React.FC<Props> = ({ todo, deleteTodo, updateTodo }) => {
+const TodoItem = ({ todo }: Props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editTodo, setEditTodo] = useState<Todo>(todo);
 
   const updateChanges = () => {
     updateTodo(editTodo);
     setIsEdit(false);
+  };
+
+  const updateTodo = async (updateTodo: Todo) => {
+    await updateDoc(doc(db, "todos", updateTodo.id), {
+      ...updateTodo,
+      updated_at: dbTimestamp.now(),
+    });
+  };
+
+  const deleteTodo = async (id: string) => {
+    await deleteDoc(doc(db, "todos", id));
   };
 
   return (

@@ -3,15 +3,12 @@ import { Todo } from "../types/Todo";
 import styled from "@emotion/styled";
 import {
   collection,
-  deleteDoc,
-  updateDoc,
   limit,
   onSnapshot,
   orderBy,
   query,
-  doc,
 } from "firebase/firestore";
-import { db, dbTimestamp } from "../firebase";
+import { db } from "../firebase";
 import TodoItem from "../components/TodoItem";
 
 const Title = styled.h1`
@@ -36,22 +33,6 @@ const List = styled.ul`
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
-
-  const updateTodo = async (updateTodo: Todo) => {
-    const newTodos = todos.map((todo) =>
-      todo.id === updateTodo.id ? updateTodo : todo
-    );
-    setTodos(newTodos);
-
-    await updateDoc(doc(db, "todos", updateTodo.id), {
-      ...updateTodo,
-      updated_at: dbTimestamp.now(),
-    });
-  };
-
-  const deleteTodo = async (id: string) => {
-    await deleteDoc(doc(db, "todos", id));
-  };
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -80,12 +61,7 @@ const TodoList = () => {
       <Title>TODOリスト</Title>
       <List>
         {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            deleteTodo={deleteTodo}
-            updateTodo={updateTodo}
-          />
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </List>
     </Container>
