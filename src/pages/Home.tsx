@@ -58,7 +58,6 @@ const TodoList = () => {
 
   return (
     <Container>
-      <Title>TODOリスト</Title>
       <List>
         {todos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />

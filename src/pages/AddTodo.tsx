@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { NON_STARTED, TodoStatuses } from "../constants/TodoStatus";
-import CustomSelect from "./CustomSelect";
-import { TodoType } from "../types/Todo";
-
-interface Props {
-  addTodo: (todo: TodoType) => void;
-}
+import { Todo } from "../types/Todo";
+import CustomSelect from "../components/CustomSelect";
+import { dbTimestamp } from "../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -27,16 +24,19 @@ const Title = styled.h1`
   text-align: left;
 `;
 
-const InputArea: React.FC<Props> = ({ addTodo }) => {
-  const [todo, setTodo] = useState<TodoType>({
+const AddTodo = () => {
+  const [todo, setTodo] = useState<Todo>({
+    id: "",
     title: "",
     detail: "",
-    status: NON_STARTED,    
+    status: NON_STARTED,
+    created_at: dbTimestamp.now(),
+    updated_at: dbTimestamp.now(),
   });
 
   const createTodo = () => {
-    addTodo(todo);
-    setTodo({ title: "", status: NON_STARTED, detail: "" });
+    // addTodo(todo);
+    // setTodo({ title: "", status: NON_STARTED, detail: "" });
   };
 
   return (
@@ -83,4 +83,4 @@ const InputArea: React.FC<Props> = ({ addTodo }) => {
   );
 };
 
-export default InputArea;
+export default AddTodo;

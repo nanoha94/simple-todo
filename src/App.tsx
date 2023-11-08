@@ -2,8 +2,9 @@ import "./App.css";
 import styled from "@emotion/styled";
 import Home from "./pages/Home";
 import Header from "./components/Header";
+import Router from "./Router";
 
-const Container = styled.div`
+const Main = styled.main`
   width: calc(100% - 40px);
   padding: 20px;
   display: flex;
@@ -15,9 +16,10 @@ function App() {
   return (
     <>
       <Header />
-      <Container>
-        <Home />
-      </Container>
+
+      <Main>
+        <Router />
+      </Main>
     </>
   );
 }
