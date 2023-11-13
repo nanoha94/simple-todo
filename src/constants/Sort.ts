@@ -1,5 +1,4 @@
 import { Todo } from "../types/Todo";
-import { todoSortOption } from "../recoil/store";
 
 export const ORDER_ASC: string = "新着";
 export const ORDER_DEC: string = "登録日";

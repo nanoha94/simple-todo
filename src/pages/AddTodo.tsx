@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { TextField, Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { NON_STARTED, TodoStatuses } from "../constants/TodoStatus";
-import { Todo } from "../types/Todo";
 import CustomSelect from "../components/CustomSelect";
 import { db, dbTimestamp } from "../firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
