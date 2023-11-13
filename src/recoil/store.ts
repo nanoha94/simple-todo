@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { ORDER_ASC } from "../constants/Sort";
+import { ORDER_ASC } from "../constants/TodoSort";
 
 export const todoSortOption = atom({
   key: "todoSortOption",

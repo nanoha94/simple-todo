@@ -1,7 +1,7 @@
 import { useRecoilState, RecoilState } from "recoil";
 import styled from "@emotion/styled";
 import CustomSelect from "./CustomSelect";
-import { SortOptions } from "../constants/Sort";
+import { SortOptions } from "../constants/TodoSort";
 
 interface Props {
   todoSortOption: RecoilState<string>;

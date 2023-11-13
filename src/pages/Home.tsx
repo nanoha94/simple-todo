@@ -13,7 +13,7 @@ import TodoItem from "../components/TodoItem";
 import SortSelect from "../components/SortSelect";
 import { useRecoilState } from "recoil";
 import { todoSortOption } from "../recoil/store";
-import { orderFunc } from "../constants/Sort";
+import { orderFunc } from "../constants/TodoSort";
 
 const Container = styled.div`
   display: flex;
