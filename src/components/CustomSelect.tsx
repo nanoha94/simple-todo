@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { Select, MenuItem } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
@@ -7,6 +8,11 @@ interface Props {
   onChange: (status: string) => void;
 }
 
+const Container = styled.div`
+  margin-left: 0;
+  margin-right: auto;
+`;
+
 const CustomSelect: React.FC<Props> = ({ options, value, onChange }) => {
   const [selected, setSelected] = useState(value);
 
@@ -15,22 +21,22 @@ const CustomSelect: React.FC<Props> = ({ options, value, onChange }) => {
   }, [value]);
 
   return (
-    <Select
-      sx={{ width: 100 }}
-      value={selected}
-      label="Status"
-      size="small"
-      onChange={(e) => {
-        onChange(e.target.value);
-        setSelected(e.target.value);
-      }}
-    >
-      {options.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </Select>
+    <Container>
+      <Select
+        value={selected}
+        size="small"
+        onChange={(e) => {
+          onChange(e.target.value);
+          setSelected(e.target.value);
+        }}
+      >
+        {options.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </Container>
   );
 };
 

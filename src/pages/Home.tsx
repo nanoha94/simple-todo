@@ -10,12 +10,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import TodoItem from "../components/TodoItem";
-
-const Title = styled.h1`
-  margin: 0;
-  font-size: 1.5rem;
-  text-align: left;
-`;
+import SortSelect from "../components/SortSelect";
+import { useRecoilState } from "recoil";
+import { todoSortOption } from "../recoil/store";
+import { orderFunc } from "../constants/Sort";
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +31,7 @@ const List = styled.ul`
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [option, setOption] = useRecoilState(todoSortOption);
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -58,8 +57,9 @@ const TodoList = () => {
 
   return (
     <Container>
+      <SortSelect todoSortOption={todoSortOption} />
       <List>
-        {todos.map((todo) => (
+        {todos.sort(orderFunc(option)).map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </List>

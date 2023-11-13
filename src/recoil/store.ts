@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { ORDER_ASC } from "../constants/Sort";
 
-const operationMode = atom({
-  key: "operationMode",
-  default: "normal",
+export const todoSortOption = atom({
+  key: "todoSortOption",
+  default: ORDER_ASC,
 });

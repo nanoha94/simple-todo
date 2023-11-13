@@ -40,6 +40,8 @@ const Status = styled.span<{ status: string }>`
   border-radius: 8px;
 `;
 
+const Date = styled.span``;
+
 const Title = styled.p`
   margin: 0;
   text-align: left;
@@ -56,6 +58,7 @@ const Detail = styled.p`
 const TodoItem = ({ todo }: Props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editTodo, setEditTodo] = useState<Todo>(todo);
+  const createdAt = editTodo.created_at.toDate();
 
   const updateChanges = () => {
     updateTodo(editTodo);
@@ -114,7 +117,14 @@ const TodoItem = ({ todo }: Props) => {
       ) : (
         <ListItem>
           <HorizontalLayout>
-            <Status status={editTodo.status}>{editTodo.status}</Status>
+            <HorizontalLayout>
+              <Status status={editTodo.status}>{editTodo.status}</Status>
+              <Date>
+                {`${createdAt.getFullYear()}/${
+                  createdAt.getMonth() + 1
+                }/${createdAt.getDate()} 作成`}
+              </Date>
+            </HorizontalLayout>
             <HorizontalLayout>
               <Tooltip title="編集">
                 <IconButton onClick={() => setIsEdit(true)}>
