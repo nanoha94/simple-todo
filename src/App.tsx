@@ -1,6 +1,5 @@
 import "./App.css";
 import styled from "@emotion/styled";
-import Home from "./pages/Home";
 import Header from "./components/Header";
 import Router from "./Router";
 
