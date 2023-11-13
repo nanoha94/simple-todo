@@ -50,6 +50,7 @@ const Detail = styled.p`
   margin: 0;
   text-align: left;
   font-size: 0.8rem;
+  white-space: pre-wrap;
 `;
 
 const TodoItem = ({ todo }: Props) => {
