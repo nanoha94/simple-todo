@@ -13,7 +13,7 @@ import TodoItem from "../components/TodoItem";
 import SortSelect from "../components/SortSelect";
 import { useRecoilState } from "recoil";
 import { todoSortOption } from "../recoil/store";
-import { orderFunc } from "../constants/TodoSort";
+import { ORDER_ASC, ORDER_DEC, ORDER_STATUS } from "../constants/TodoSort";
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +32,49 @@ const List = styled.ul`
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [option, setOption] = useRecoilState(todoSortOption);
+
+  const orderFunc = (option: string) => {
+    switch (option) {
+      case ORDER_ASC:
+        return orderByDate;
+      case ORDER_DEC:
+        return orderByDateDEC;
+      case ORDER_STATUS:
+        return orderByStatus;
+      default:
+        break;
+    }
+  };
+
+  const orderByDate = (a: Todo, b: Todo) => {
+    if (a.created_at.toDate() > b.created_at.toDate()) {
+      return -1;
+    } else if (a.created_at.toDate() < b.created_at.toDate()) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
+
+  const orderByDateDEC = (a: Todo, b: Todo) => {
+    if (a.created_at.toDate() < b.created_at.toDate()) {
+      return -1;
+    } else if (a.created_at.toDate() > b.created_at.toDate()) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
+
+  const orderByStatus = (a: Todo, b: Todo) => {
+    if (a.status > b.status) {
+      return -1;
+    } else if (a.status < b.status) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
 
   useEffect(() => {
     const unsub = onSnapshot(

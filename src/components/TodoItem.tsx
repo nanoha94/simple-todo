@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Todo } from "../types/Todo";
 import CustomSelect from "./CustomSelect";
-import { TodoStatuses, statusColor } from "../constants/TodoStatus";
+import { COMPLETED, PROGRESS, TodoStatuses } from "../constants/TodoStatus";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { IconButton, Tooltip, TextField, Divider, Button } from "@mui/material";
 import { deleteDoc, updateDoc, doc } from "firebase/firestore";
 import { db, dbTimestamp } from "../firebase";
+import { orange, green, gray } from "../constants/Color";
 
 interface Props {
   todo: Todo;
@@ -32,11 +33,11 @@ const HorizontalLayout = styled.div`
   gap: 8px;
 `;
 
-const Status = styled.span<{ status: string }>`
+const Status = styled.span<{ color: string }>`
   padding: 2px 8px;
   font-weight: bold;
   color: white;
-  background-color: ${(props) => statusColor(props.status)};
+  background-color: ${(props) => props.color};
   border-radius: 8px;
 `;
 
@@ -59,6 +60,16 @@ const TodoItem = ({ todo }: Props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editTodo, setEditTodo] = useState<Todo>(todo);
   const createdAt = editTodo.created_at.toDate();
+
+  const statusColor = (status: string): string => {
+    if (status === PROGRESS) {
+      return orange;
+    } else if (status == COMPLETED) {
+      return green;
+    } else {
+      return gray;
+    }
+  };
 
   const updateChanges = () => {
     updateTodo(editTodo);
@@ -118,7 +129,9 @@ const TodoItem = ({ todo }: Props) => {
         <ListItem>
           <HorizontalLayout>
             <HorizontalLayout>
-              <Status status={editTodo.status}>{editTodo.status}</Status>
+              <Status color={statusColor(editTodo.status)}>
+                {editTodo.status}
+              </Status>
               <Date>
                 {`${createdAt.getFullYear()}/${
                   createdAt.getMonth() + 1
